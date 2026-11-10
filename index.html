@@ -1,44 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Tài liệu Kỹ thuật FPT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm nang Kỹ thuật - Xử lý sự cố mạng</title>
+    <!-- Nhúng phông chữ hiện đại từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; }
-        h1 { color: #d32f2f; }
-        .code-box { background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace; }
+        /* Tùy chỉnh màu sắc chủ đạo */
+        :root {
+            --primary-color: #F26F21; /* Màu cam nổi bật */
+            --text-color: #333333;
+            --bg-color: #f4f7f6;
+            --code-bg: #282c34; /* Nền tối cho khối code giống terminal */
+            --code-text: #abb2bf;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Phần Header */
+        header {
+            background-color: #ffffff;
+            border-bottom: 3px solid var(--primary-color);
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header h1 { margin: 0; font-size: 24px; color: #1a5276; }
+
+        /* Bố cục chia 2 cột */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Cột Menu bên trái */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            padding: 30px 20px;
+            border-right: 1px solid #e0e0e0;
+        }
+        .sidebar ul { list-style: none; padding: 0; margin: 0; position: sticky; top: 80px; }
+        .sidebar li { margin-bottom: 12px; }
+        .sidebar a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .sidebar a:hover { background: #ffe4d6; color: var(--primary-color); }
+
+        /* Cột Nội dung chính */
+        .content {
+            flex: 1;
+            padding: 40px 60px;
+            background: #ffffff;
+        }
+        .content h2 {
+            color: #1a5276;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 50px;
+        }
+        .content h2:first-child { margin-top: 0; }
+        
+        /* Khối hiển thị Code chuyên nghiệp */
+        .code-block {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            overflow-x: auto;
+            line-height: 1.6;
+            margin: 15px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .highlight { color: #61afef; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Cẩm nang xử lý sự cố mạng</h1>
-    <h2>1. Kiểm tra định tuyến với Tracetcp</h2>
-    <p>Sử dụng lệnh sau để kiểm tra TCP qua cổng 443:</p>
-    <p class="code-box">tracetcp google.com:443</p>
-    
-    <h2>2. Phân tích gói tin Wireshark</h2>
-    <p>Để lọc các gói tin bị rớt, sử dụng cú pháp:</p>
-    <p class="code-box">tcp.analysis.lost_segment</p>
+
+    <header>
+        <h1>🌐 Cẩm nang Hỗ trợ Kỹ thuật</h1>
+    </header>
+
+    <div class="container">
+        <!-- MENU BÊN TRÁI -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#tracetcp">1. Lệnh Tracetcp</a></li>
+                <li><a href="#wireshark">2. Phân tích Wireshark</a></li>
+                <li><a href="#nslookup">3. Kiểm tra Nslookup</a></li>
+            </ul>
+        </nav>
+
+        <!-- NỘI DUNG BÊN PHẢI -->
+        <main class="content">
+            <section id="tracetcp">
+                <h2>1. Kiểm tra kết nối với Tracetcp</h2>
+                <p>Sử dụng tracetcp để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP, thay vì ping ICMP thông thường:</p>
+                <div class="code-block">
+                    <span class="highlight">tracetcp</span> 192.168.1.1:80
+                </div>
+                <ul>
+                    <li>Xác định chính xác hop bị rớt gói (Timeout).</li>
+                    <li>Kiểm tra độ trễ RTT giữa các nút mạng.</li>
+                </ul>
+            </section>
+
+            <section id="wireshark">
+                <h2>2. Phân tích gói tin với Wireshark</h2>
+                <p>Bắt và phân tích lưu lượng mạng để tìm ra các bất thường trong giao thức kết nối. Cú pháp lọc các gói tin bị rớt:</p>
+                <div class="code-block">
+                    ip.addr == 192.168.1.100 && tcp.port == 443<br>
+                    <span class="highlight">tcp.analysis.lost_segment</span>
+                </div>
+                <p><strong>Lưu ý:</strong> Chú ý các cờ TCP (SYN, ACK, RST) để đánh giá trạng thái bắt tay 3 bước.</p>
+            </section>
+
+            <section id="nslookup">
+                <h2>3. Kiểm tra phân giải tên miền Nslookup</h2>
+                <p>Dùng để ép hỏi một DNS Server cụ thể xem bản ghi tên miền đã trỏ đúng IP đích chưa:</p>
+                <div class="code-block">
+                    <span class="highlight">nslookup</span> google.com 8.8.8.8
+                </div>
+            </section>
+        </main>
+    </div>
+
 </body>
 </html>
-<div class="doc-container">
-  <header>
-    <h1>Cẩm nang xử lý sự cố mạng</h1>
-    <p class="subtitle">Hướng dẫn chẩn đoán và khắc phục sự cố kết nối hàng ngày</p>
-  </header>
-
-  <section class="card">
-    <h2>1. Kiểm tra kết nối với Tracetcp</h2>
-    <p>Sử dụng <code>tracetcp</code> để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP:</p>
-    <pre><code>tracetcp 192.168.1.1:80</code></pre>
-    <ul>
-      <li>Xác định hop bị rớt gói (Timeout)</li>
-      <li>Kiểm tra độ trễ RTT giữa các nút mạng</li>
-    </ul>
-  </section>
-
-  <section class="card">
-    <h2>2. Phân tích gói tin với Wireshark</h2>
-    <p>Bắt và phân tích lưu lượng mạng để tìm ra các bất thường trong giao thức:</p>
-    <pre><code>ip.addr == 192.168.1.100 && tcp.port == 443</code></pre>
-    <p>Chú ý các cờ TCP (SYN, ACK, RST) để đánh giá trạng thái bắt tay 3 bước.</p>
-  </section>
-</div>
