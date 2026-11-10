@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tài liệu Kỹ thuật FPT</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; }
+        h1 { color: #d32f2f; }
+        .code-box { background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Cẩm nang xử lý sự cố mạng</h1>
+    <h2>1. Kiểm tra định tuyến với Tracetcp</h2>
+    <p>Sử dụng lệnh sau để kiểm tra TCP qua cổng 443:</p>
+    <p class="code-box">tracetcp google.com:443</p>
+    
+    <h2>2. Phân tích gói tin Wireshark</h2>
+    <p>Để lọc các gói tin bị rớt, sử dụng cú pháp:</p>
+    <p class="code-box">tcp.analysis.lost_segment</p>
+</body>
+</html>
