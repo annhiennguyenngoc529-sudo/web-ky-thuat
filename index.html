@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cẩm nang Kỹ thuật - Xử lý sự cố mạng</title>
-    <!-- Nhúng phông chữ hiện đại từ Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Tùy chỉnh màu sắc chủ đạo */
         :root {
-            --primary-color: #F26F21; /* Màu cam nổi bật */
+            --primary-color: #F26F21;
             --text-color: #333333;
             --bg-color: #f4f7f6;
-            --code-bg: #282c34; /* Nền tối cho khối code giống terminal */
+            --code-bg: #282c34;
             --code-text: #abb2bf;
         }
 
@@ -26,7 +24,6 @@
             min-height: 100vh;
         }
 
-        /* Phần Header */
         header {
             background-color: #ffffff;
             border-bottom: 3px solid var(--primary-color);
@@ -38,7 +35,6 @@
         }
         header h1 { margin: 0; font-size: 24px; color: #1a5276; }
 
-        /* Bố cục chia 2 cột */
         .container {
             display: flex;
             max-width: 1200px;
@@ -47,7 +43,7 @@
             flex: 1;
         }
 
-        /* Cột Menu bên trái */
+        /* --- MENU --- */
         .sidebar {
             width: 260px;
             background: #ffffff;
@@ -66,8 +62,15 @@
             transition: all 0.2s;
         }
         .sidebar a:hover { background: #ffe4d6; color: var(--primary-color); }
+        
+        /* Hiệu ứng màu nền cho Menu đang được chọn */
+        .sidebar a.active-link {
+            background: #ffe4d6;
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+        }
 
-        /* Cột Nội dung chính */
+        /* --- NỘI DUNG --- */
         .content {
             flex: 1;
             padding: 40px 60px;
@@ -77,11 +80,9 @@
             color: #1a5276;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
-            margin-top: 50px;
+            margin-top: 0;
         }
-        .content h2:first-child { margin-top: 0; }
         
-        /* Khối hiển thị Code chuyên nghiệp */
         .code-block {
             background-color: var(--code-bg);
             color: var(--code-text);
@@ -94,6 +95,20 @@
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
         .highlight { color: #61afef; font-weight: bold; }
+
+        /* --- CSS MỚI: QUẢN LÝ ẨN/HIỆN NỘI DUNG --- */
+        .content section {
+            display: none; /* Ẩn tất cả theo mặc định */
+            animation: fadeIn 0.4s ease-in-out; /* Hiệu ứng mượt khi hiện ra */
+        }
+        .content section.active {
+            display: block; /* Chỉ hiện mục có thẻ active */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -103,19 +118,21 @@
     </header>
 
     <div class="container">
-        <!-- MENU BÊN TRÁI -->
+        <!-- MENU BÊN TRÁI ĐƯỢC GẮN LỆNH JAVASCRIPT -->
         <nav class="sidebar">
             <ul>
-                <li><a href="#tracetcp">1. Lệnh Tracetcp</a></li>
-                <li><a href="#wireshark">2. Phân tích Wireshark</a></li>
-                <li><a href="#nslookup">3. Kiểm tra Nslookup</a></li>
-		<li><a href="#mikrotik">4. Hướng dẫn Mikrotik</a></li>
+                <li><a href="#" class="active-link" onclick="showSection(event, 'tracetcp', this)">1. Lệnh Tracetcp</a></li>
+                <li><a href="#" onclick="showSection(event, 'wireshark', this)">2. Phân tích Wireshark</a></li>
+                <li><a href="#" onclick="showSection(event, 'nslookup', this)">3. Kiểm tra Nslookup</a></li>
+                <li><a href="#" onclick="showSection(event, 'mikrotik', this)">4. Hướng dẫn Mikrotik</a></li>
             </ul>
         </nav>
 
         <!-- NỘI DUNG BÊN PHẢI -->
         <main class="content">
-            <section id="tracetcp">
+            
+            <!-- Thêm class="active" vào bài đầu tiên để nó tự hiện khi mới mở web -->
+            <section id="tracetcp" class="active">
                 <h2>1. Kiểm tra kết nối với Tracetcp</h2>
                 <p>Sử dụng tracetcp để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP, thay vì ping ICMP thông thường:</p>
                 <div class="code-block">
@@ -144,25 +161,49 @@
                     <span class="highlight">nslookup</span> google.com 8.8.8.8
                 </div>
             </section>
-	<section id="mikrotik">
-    <h2>4. Hướng dẫn cấu hình Mikrotik</h2>
-    <p>Bấm vào các liên kết bên dưới để tải tài liệu Word về máy tính:</p>
-    <ul>
-        <li>
-            <a href="Cấu hình PCC 6 WAN MIKROTIK V7.docx" download style="color: #F26F21; font-weight: bold; text-decoration: none;">
-                📥 Tải về: Cấu hình PCC 6 WAN MIKROTIK V7 (.docx)
-            </a>
-        </li>
-        <br>
-        <li>
-            <a href="Gioi hạn băng thông mikrotik.docx" download style="color: #F26F21; font-weight: bold; text-decoration: none;">
-                📥 Tải về: Giới hạn băng thông Mikrotik (.docx)
-            </a>
-        </li>
-    </ul>
-</section>
+
+            <section id="mikrotik">
+                <h2>4. Hướng dẫn cấu hình Mikrotik</h2>
+                <p>Bấm vào các liên kết bên dưới để tải tài liệu Word về máy tính:</p>
+                <ul>
+                    <li>
+                        <a href="Cấu hình PCC 6 WAN MIKROTIK V7.docx" download style="color: #F26F21; font-weight: bold; text-decoration: none;">
+                            📥 Tải về: Cấu hình PCC 6 WAN MIKROTIK V7 (.docx)
+                        </a>
+                    </li>
+                    <br>
+                    <li>
+                        <a href="Gioi hạn băng thông mikrotik.docx" download style="color: #F26F21; font-weight: bold; text-decoration: none;">
+                            📥 Tải về: Giới hạn băng thông Mikrotik (.docx)
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
         </main>
     </div>
 
+    <!-- MÃ JAVASCRIPT ĐỂ CHUYỂN TAB -->
+    <script>
+        function showSection(event, sectionId, clickedMenu) {
+            event.preventDefault(); // Ngăn trình duyệt cuộn hoặc nhảy trang khi click
+            
+            // 1. Tắt toàn bộ nội dung đang hiện
+            document.querySelectorAll('.content section').forEach(function(sec) {
+                sec.classList.remove('active');
+            });
+            
+            // 2. Bật nội dung của mục vừa click
+            document.getElementById(sectionId).classList.add('active');
+            
+            // 3. Xóa màu cam bôi đậm ở các menu khác
+            document.querySelectorAll('.sidebar a').forEach(function(link) {
+                link.classList.remove('active-link');
+            });
+            
+            // 4. Bôi đậm màu cam cho menu vừa click
+            clickedMenu.classList.add('active-link');
+        }
+    </script>
 </body>
 </html>
