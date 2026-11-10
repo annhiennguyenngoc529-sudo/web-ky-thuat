@@ -19,3 +19,26 @@
     <p class="code-box">tcp.analysis.lost_segment</p>
 </body>
 </html>
+<div class="doc-container">
+  <header>
+    <h1>Cẩm nang xử lý sự cố mạng</h1>
+    <p class="subtitle">Hướng dẫn chẩn đoán và khắc phục sự cố kết nối hàng ngày</p>
+  </header>
+
+  <section class="card">
+    <h2>1. Kiểm tra kết nối với Tracetcp</h2>
+    <p>Sử dụng <code>tracetcp</code> để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP:</p>
+    <pre><code>tracetcp 192.168.1.1:80</code></pre>
+    <ul>
+      <li>Xác định hop bị rớt gói (Timeout)</li>
+      <li>Kiểm tra độ trễ RTT giữa các nút mạng</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>2. Phân tích gói tin với Wireshark</h2>
+    <p>Bắt và phân tích lưu lượng mạng để tìm ra các bất thường trong giao thức:</p>
+    <pre><code>ip.addr == 192.168.1.100 && tcp.port == 443</code></pre>
+    <p>Chú ý các cờ TCP (SYN, ACK, RST) để đánh giá trạng thái bắt tay 3 bước.</p>
+  </section>
+</div>
