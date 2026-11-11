@@ -13,102 +13,23 @@
             --code-bg: #282c34;
             --code-text: #abb2bf;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: #ffffff;
-            border-bottom: 3px solid var(--primary-color);
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; }
+        header { background-color: #ffffff; border-bottom: 3px solid var(--primary-color); padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
         header h1 { margin: 0; font-size: 24px; color: #1a5276; }
-
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            flex: 1;
-        }
-
-        /* --- MENU --- */
-        .sidebar {
-            width: 260px;
-            background: #ffffff;
-            padding: 30px 20px;
-            border-right: 1px solid #e0e0e0;
-        }
+        .container { display: flex; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; }
+        .sidebar { width: 260px; background: #ffffff; padding: 30px 20px; border-right: 1px solid #e0e0e0; }
         .sidebar ul { list-style: none; padding: 0; margin: 0; position: sticky; top: 80px; }
         .sidebar li { margin-bottom: 12px; }
-        .sidebar a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            display: block;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .sidebar a:hover { background: #ffe4d6; color: var(--primary-color); }
-        
-        /* Hiệu ứng màu nền cho Menu đang được chọn */
-        .sidebar a.active-link {
-            background: #ffe4d6;
-            color: var(--primary-color);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        /* --- NỘI DUNG --- */
-        .content {
-            flex: 1;
-            padding: 40px 60px;
-            background: #ffffff;
-        }
-        .content h2 {
-            color: #1a5276;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        
-        .code-block {
-            background-color: var(--code-bg);
-            color: var(--code-text);
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-family: 'Consolas', 'Courier New', monospace;
-            overflow-x: auto;
-            line-height: 1.6;
-            margin: 15px 0;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-        }
+        .sidebar a { text-decoration: none; color: #555; font-weight: 600; display: block; padding: 8px 12px; border-radius: 6px; transition: all 0.2s; }
+        .sidebar a:hover, .sidebar a.active-link { background: #ffe4d6; color: var(--primary-color); }
+        .sidebar a.active-link { border-left: 4px solid var(--primary-color); }
+        .content { flex: 1; padding: 40px 60px; background: #ffffff; }
+        .content h2 { color: #1a5276; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        .code-block { background-color: var(--code-bg); color: var(--code-text); padding: 15px 20px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; overflow-x: auto; line-height: 1.6; margin: 15px 0; }
         .highlight { color: #61afef; font-weight: bold; }
-
-        /* --- CSS MỚI: QUẢN LÝ ẨN/HIỆN NỘI DUNG --- */
-        .content section {
-            display: none; /* Ẩn tất cả theo mặc định */
-            animation: fadeIn 0.4s ease-in-out; /* Hiệu ứng mượt khi hiện ra */
-        }
-        .content section.active {
-            display: block; /* Chỉ hiện mục có thẻ active */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .content section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .content section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -118,7 +39,7 @@
     </header>
 
     <div class="container">
-        <!-- MENU BÊN TRÁI ĐƯỢC GẮN LỆNH JAVASCRIPT -->
+        <!-- MENU BÊN TRÁI -->
         <nav class="sidebar">
             <ul>
                 <li><a href="#" class="active-link" onclick="showSection(event, 'tracetcp', this)">1. Lệnh Tracetcp</a></li>
@@ -131,77 +52,54 @@
         <!-- NỘI DUNG BÊN PHẢI -->
         <main class="content">
             
-            <!-- Thêm class="active" vào bài đầu tiên để nó tự hiện khi mới mở web -->
             <section id="tracetcp" class="active">
                 <h2>1. Kiểm tra kết nối với Tracetcp</h2>
-                <p>Sử dụng tracetcp để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP, thay vì ping ICMP thông thường:</p>
-                <div class="code-block">
-                    <span class="highlight">tracetcp</span> 192.168.1.1:80
-                </div>
-                <ul>
-                    <li>Xác định chính xác hop bị rớt gói (Timeout).</li>
-                    <li>Kiểm tra độ trễ RTT giữa các nút mạng.</li>
-                </ul>
+                <p>Sử dụng tracetcp để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP:</p>
+                <div class="code-block"><span class="highlight">tracetcp</span> 192.168.1.1:80</div>
             </section>
 
             <section id="wireshark">
                 <h2>2. Phân tích gói tin với Wireshark</h2>
-                <p>Bắt và phân tích lưu lượng mạng để tìm ra các bất thường trong giao thức kết nối. Cú pháp lọc các gói tin bị rớt:</p>
-                <div class="code-block">
-                    ip.addr == 192.168.1.100 && tcp.port == 443<br>
-                    <span class="highlight">tcp.analysis.lost_segment</span>
-                </div>
-                <p><strong>Lưu ý:</strong> Chú ý các cờ TCP (SYN, ACK, RST) để đánh giá trạng thái bắt tay 3 bước.</p>
+                <p>Cú pháp lọc các gói tin bị rớt:</p>
+                <div class="code-block">ip.addr == 192.168.1.100 && tcp.port == 443<br><span class="highlight">tcp.analysis.lost_segment</span></div>
             </section>
 
             <section id="nslookup">
                 <h2>3. Kiểm tra phân giải tên miền Nslookup</h2>
-                <p>Dùng để ép hỏi một DNS Server cụ thể xem bản ghi tên miền đã trỏ đúng IP đích chưa:</p>
-                <div class="code-block">
-                    <span class="highlight">nslookup</span> google.com 8.8.8.8
-                </div>
+                <div class="code-block"><span class="highlight">nslookup</span> google.com 8.8.8.8</div>
             </section>
 
+            <!-- PHẦN CHỨA FILE WORD ĐÃ ĐƯỢC NHÚNG -->
             <section id="mikrotik">
                 <h2>4. Hướng dẫn cấu hình Mikrotik</h2>
-                <p>Bấm vào các liên kết bên dưới để tải tài liệu Word về máy tính:</p>
-                <ul>
-                    <li>
-                        <a href="Cấu hình PCC 6 WAN MIKROTIK V7.docx" download style="color: #F26F21; font-weight: bold; text-decoration: none;">
-                            📥 Tải về: Cấu hình PCC 6 WAN MIKROTIK V7 (.docx)
-                        </a>
-                    </li>
-                    <br>
-                    <li>
-                        <a href="Gioi hạn băng thông mikrotik.docx" download style="color: #F26F21; font-weight: bold; text-decoration: none;">
-                            📥 Tải về: Giới hạn băng thông Mikrotik (.docx)
-                        </a>
-                    </li>
-                </ul>
+                <p><strong>Bản xem trước tài liệu: Giới hạn băng thông Mikrotik</strong></p>
+                
+                <!-- Khung đọc file trực tiếp -->
+                <iframe 
+                    src="https://docs.google.com/gview?url=https://annhiennguyenngoc529-sudo.github.io/web-ky-thuat/Gioi%20hạn%20băng%20thông%20mikrotik.docx&embedded=true" 
+                    width="100%" 
+                    height="700px" 
+                    style="border: 2px solid #ccc; border-radius: 8px;">
+                </iframe>
+                
+                <!-- Nút tải file dự phòng -->
+                <div style="margin-top: 20px;">
+                    <a href="Gioi hạn băng thông mikrotik.docx" download style="padding: 12px 20px; background: #F26F21; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                        📥 Tải file Word về máy
+                    </a>
+                </div>
             </section>
 
         </main>
     </div>
 
-    <!-- MÃ JAVASCRIPT ĐỂ CHUYỂN TAB -->
+    <!-- MÃ CHUYỂN TAB -->
     <script>
         function showSection(event, sectionId, clickedMenu) {
-            event.preventDefault(); // Ngăn trình duyệt cuộn hoặc nhảy trang khi click
-            
-            // 1. Tắt toàn bộ nội dung đang hiện
-            document.querySelectorAll('.content section').forEach(function(sec) {
-                sec.classList.remove('active');
-            });
-            
-            // 2. Bật nội dung của mục vừa click
+            event.preventDefault();
+            document.querySelectorAll('.content section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-            
-            // 3. Xóa màu cam bôi đậm ở các menu khác
-            document.querySelectorAll('.sidebar a').forEach(function(link) {
-                link.classList.remove('active-link');
-            });
-            
-            // 4. Bôi đậm màu cam cho menu vừa click
+            document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active-link'));
             clickedMenu.classList.add('active-link');
         }
     </script>
