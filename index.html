@@ -3,126 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cẩm nang Kỹ thuật - Xử lý sự cố mạng</title>
+    <title>Kho Tài Liệu Kỹ Thuật - FPT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #F26F21;
-            --text-color: #333333;
-            --bg-color: #f4f7f6;
-            --code-bg: #282c34;
-            --code-text: #abb2bf;
-        }
+        :root { --primary-color: #F26F21; --text-color: #333333; --bg-color: #f4f7f6; }
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; }
-        header { background-color: #ffffff; border-bottom: 3px solid var(--primary-color); padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        header h1 { margin: 0; font-size: 24px; color: #1a5276; }
-        .container { display: flex; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; }
-        .sidebar { width: 260px; background: #ffffff; padding: 30px 20px; border-right: 1px solid #e0e0e0; }
-        .sidebar ul { list-style: none; padding: 0; margin: 0; position: sticky; top: 80px; }
-        .sidebar li { margin-bottom: 12px; }
-        .sidebar a { text-decoration: none; color: #555; font-weight: 600; display: block; padding: 8px 12px; border-radius: 6px; transition: all 0.2s; }
-        .sidebar a:hover, .sidebar a.active-link { background: #ffe4d6; color: var(--primary-color); }
-        .sidebar a.active-link { border-left: 4px solid var(--primary-color); }
-        .content { flex: 1; padding: 40px 60px; background: #ffffff; }
-        .content h2 { color: #1a5276; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
-        .code-block { background-color: var(--code-bg); color: var(--code-text); padding: 15px 20px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; overflow-x: auto; line-height: 1.6; margin: 15px 0; }
-        .highlight { color: #61afef; font-weight: bold; }
-        .content section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        header { background-color: #ffffff; border-bottom: 3px solid var(--primary-color); padding: 15px 30px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        header h1 { margin: 0; font-size: 22px; color: #1a5276; }
+        .container { display: flex; max-width: 1300px; margin: 0 auto; width: 100%; flex: 1; }
+        
+        .sidebar { width: 280px; background: #ffffff; padding: 25px 20px; border-right: 1px solid #e0e0e0; }
+        .sidebar ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar .folder-title { font-weight: 600; color: #1a5276; padding: 10px; background: #f0f4f8; border-radius: 6px; margin-bottom: 5px; cursor: default; }
+        .sidebar .sub-menu { padding-left: 15px; margin-bottom: 15px; border-left: 2px solid #eee; margin-left: 10px; }
+        .sidebar .sub-menu a { text-decoration: none; color: #555; font-size: 14px; display: block; padding: 8px 12px; border-radius: 6px; transition: all 0.2s; }
+        .sidebar .sub-menu a.active-link, .sidebar .sub-menu a:hover { background: #ffe4d6; color: var(--primary-color); border-left: 3px solid var(--primary-color); font-weight: 600; }
+        
+        .content { flex: 1; padding: 30px 40px; background: #ffffff; }
+        .content h2 { color: #1a5276; border-bottom: 2px solid #f0f0f0; padding-bottom: 12px; margin-top: 0; }
+        .content section { display: none; animation: fadeIn 0.3s ease-in-out; }
         .content section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-download { display: inline-block; margin-top: 15px; padding: 10px 18px; background: var(--primary-color); color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>🌐 Cẩm nang Hỗ trợ Kỹ thuật</h1>
+        <h1>📚 Cổng Tài Liệu Kỹ Thuật</h1>
     </header>
 
     <div class="container">
-        <!-- MENU BÊN TRÁI -->
+        <!-- 1. KHU VỰC MENU -->
         <nav class="sidebar">
             <ul>
-                <li><a href="#" class="active-link" onclick="showSection(event, 'tracetcp', this)">1. Lệnh Tracetcp</a></li>
-                <li><a href="#" onclick="showSection(event, 'wireshark', this)">2. Phân tích Wireshark</a></li>
-                <li><a href="#" onclick="showSection(event, 'nslookup', this)">3. Kiểm tra Nslookup</a></li>
-                <li><a href="#" onclick="showSection(event, 'mikrotik', this)">4. Hướng dẫn Mikrotik</a></li>
-		<li><a href="#" onclick="showSection(event, 'bai-vpn', this)">5. Case Điển Hình</a></li>
+                <li>
+                    <div class="folder-title">📂 1. Mạng & Thiết bị</div>
+                    <ul class="sub-menu">
+                        <!-- ID bài viết là: bai-so-1 -->
+                        <li><a href="#" class="active-link" onclick="showSection(event, 'bai-so-1', this)">📄 Hướng dẫn cấu hình Mạng</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
 
-        <!-- NỘI DUNG BÊN PHẢI -->
+        <!-- 2. KHU VỰC NỘI DUNG TÀI LIỆU -->
         <main class="content">
-            
-            <section id="tracetcp" class="active">
-                <h2>1. Kiểm tra kết nối với Tracetcp</h2>
-                <p>Sử dụng tracetcp để xác định chính xác điểm ngắt kết nối trên tuyến đường truyền TCP:</p>
-                <div class="code-block"><span class="highlight">tracetcp</span> 192.168.1.1:80</div>
-            </section>
-
-            <section id="wireshark">
-                <h2>2. Phân tích gói tin với Wireshark</h2>
-                <p>Cú pháp lọc các gói tin bị rớt:</p>
-                <div class="code-block">ip.addr == 192.168.1.100 && tcp.port == 443<br><span class="highlight">tcp.analysis.lost_segment</span></div>
-            </section>
-
-            <section id="nslookup">
-                <h2>3. Kiểm tra phân giải tên miền Nslookup</h2>
-                <div class="code-block"><span class="highlight">nslookup</span> google.com 8.8.8.8</div>
-            </section>
-
-            <!-- PHẦN CHỨA FILE WORD ĐÃ ĐƯỢC NHÚNG -->
-            <section id="mikrotik">
-                <h2>4. Hướng dẫn cấu hình Mikrotik</h2>
-                <p><strong>Bản xem trước tài liệu: Giới hạn băng thông Mikrotik</strong></p>
+            <!-- ID bài viết khớp với Menu ở trên -->
+            <section id="bai-so-1" class="active">
+                <h2>Hướng dẫn cấu hình Mạng cơ bản</h2>
                 
-                <!-- Khung đọc file trực tiếp -->
-                <iframe 
-                    src="https://docs.google.com/gview?url=https://annhiennguyenngoc529-sudo.github.io/web-ky-thuat/Gioi%20hạn%20băng%20thông%20mikrotik.docx&embedded=true" 
-                    width="100%" 
-                    height="700px" 
-                    style="border: 2px solid #ccc; border-radius: 8px;">
-                </iframe>
+                <!-- Nhúng khung đọc Google Docs -->
+                <!-- LƯU Ý: Thay YOUR_USERNAME bằng tên GitHub của bạn (ví dụ: annhiennguyenngoc529-sudo) -->
+                <!-- Đảm bảo đường dẫn url trỏ đúng tới TaiLieu/huong-dan-cau-hinh-mang.docx -->
+                <iframe src="https://docs.google.com/gview?url=https://YOUR_USERNAME.github.io/web-ky-thuat/TaiLieu/huong-dan-cau-hinh-mang.docx&embedded=true" width="100%" height="750px" style="border: 1px solid #ccc; border-radius: 8px;"></iframe>
                 
-                <!-- Nút tải file dự phòng -->
-                <div style="margin-top: 20px;">
-                    <a href="Gioi hạn băng thông mikrotik.docx" download style="padding: 12px 20px; background: #F26F21; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                        📥 Tải file Word về máy
-                    </a>
-                </div>
-            </section>
-	<!-- CHÈN KHỐI BÀI POWERPOINT VÀO ĐÂY -->
-            <section id="bai-vpn">
-                <h2>5. Phân tích Case xử lý sự cố điển hình</h2>
-                <p><strong>Bản trình chiếu (Slide):</strong> Cuộn chuột để xem các trang, hoặc bấm nút Tải về bên dưới.</p>
-
-                <!-- Khung đọc file Powerpoint -->
-                <!-- Lưu ý: Thay chữ case-dien-hinh.pptx bằng đúng tên file của bạn nếu bạn đặt tên khác -->
-                <iframe 
-                    src="https://docs.google.com/gview?url=https://annhiennguyenngoc529-sudo.github.io/web-ky-thuat/case-dien-hinh.pptx&embedded=true" 
-                    width="100%" 
-                    height="700px" 
-                    style="border: 2px solid #ccc; border-radius: 8px;">
-                </iframe>
-
                 <!-- Nút tải file -->
-                <div style="margin-top: 20px;">
-                    <a href="case-dien-hinh.pptx" download style="padding: 12px 20px; background: #F26F21; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                        📥 Tải file Powerpoint về máy
-                    </a>
-                </div>
+                <a href="TaiLieu/huong-dan-cau-hinh-mang.docx" download class="btn-download">📥 Tải file Word về máy</a>
             </section>
-            <!-- KẾT THÚC BÀI POWERPOINT -->
-	 </main>
-           </main>
+        </main>
     </div>
 
-    <!-- MÃ CHUYỂN TAB -->
+    <!-- MÃ CHUYỂN TRANG -->
     <script>
         function showSection(event, sectionId, clickedMenu) {
             event.preventDefault();
             document.querySelectorAll('.content section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-            document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active-link'));
+            document.querySelectorAll('.sidebar .sub-menu a').forEach(link => link.classList.remove('active-link'));
             clickedMenu.classList.add('active-link');
         }
     </script>
